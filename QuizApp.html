@@ -1,0 +1,119 @@
+51.25
+https://www.youtube.com/watch?v=dtKciwk_si4&ab_channel=FlorinPop
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quiz App</title>
+	<style>
+		*{
+			box-sizing:border-box;
+		}
+		body{
+			background-color: #b8c6db;
+			background-image: linear-gradient(315deg,#b8c6db 0%, #f5f7fa 74%);
+			font-family: "Poppins","sans-serif";
+			margin:0;
+			min-height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.quiz-container{
+			background-color: #fff;
+			width: 600px;
+			max-width: 100%;
+			overflow: hidden;
+			border-radius: 10px;
+			box-shadow: 0 0 10px 5px rgba(100,100,100,0.1);
+		}
+		.quiz-header{
+			padding: 2rem;
+		}
+		button{
+			background-color: #8e44ad;
+			color: #fff;
+			border: none;
+			display: block;
+			padding: 1rem;
+			font-size: 1.5rem;
+			font-family: inherit;
+			width: 100%;
+		}
+
+		ul{
+			list-style-type: none;
+			padding: 0;
+
+		}
+
+	</style>
+	<script>
+		const quizData=[
+		{
+			question:'How old is Florin',
+			a: '10',
+			b: '17',
+			c: '26',
+			d: '110',
+			correct:
+		},{
+			question:'What is the most used programming language in 2019?',
+			a:'Java',
+			b:'C',
+			c:'Python',
+			d:'JavaScript',
+			correct:'a',
+		},{
+			question:'Who is the President of US',
+			a:'Florin Pop',
+			b:'Donald Trumb',
+			c:'Ivan Saldano',
+			d:'Mihai Andrei',
+			correct:'d',
+		},{
+			question:'What does HTML stand for',
+			a:'Hypertext Markup language',
+			b:'Cascading Style Sheet',
+			c:'Jason Object Notation',
+			d:'Application programming Interface',
+			correct:'a',
+		},{
+			question:'What year was JS launched',
+			a:'1996',
+			b:'1995',
+			c:'1994',
+			d:'none of the above',
+			correct:'d',
+		}
+		]
+	</script>
+</head>
+<body>
+	<div class="quiz-container">
+		<div class="quiz-header">
+			<h2>Question text</h2>
+			<ul>
+				<li>
+					<input type="radio" id="a" name="answer">
+					<label for="a">Question</label>
+				</li>
+				<li>
+					<input type="radio" id="b" name="answer">
+					<label for="b">Question</label>
+				</li>
+				<li>
+					<input type="radio" id="c" name="answer">
+					<label for="c">Question</label>
+				</li>
+				<li>
+					<input type="radio" id="d" name="answer">
+					<label for="d">Question</label>
+				</li>
+			</ul>
+		</div>
+		
+		<button >Submit</button>
+	</div>
+
+</body>
+</html>
