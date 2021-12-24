@@ -1,51 +1,99 @@
-
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Quiz App</title>
 	<style>
-		*{
-			box-sizing:border-box;
-		}
-		body{
-			background-color: #b8c6db;
-			background-image: linear-gradient(315deg,#b8c6db 0%, #f5f7fa 74%);
-			font-family: "Poppins","sans-serif";
-			margin:0;
-			min-height: 100vh;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-		.quiz-container{
-			background-color: #fff;
-			width: 600px;
-			max-width: 100%;
-			overflow: hidden;
-			border-radius: 10px;
-			box-shadow: 0 0 10px 5px rgba(100,100,100,0.1);
-		}
-		.quiz-header{
-			padding: 2rem;
-		}
-		button{
-			background-color: #8e44ad;
-			color: #fff;
-			border: none;
-			display: block;
-			padding: 1rem;
-			font-size: 1.5rem;
-			font-family: inherit;
-			width: 100%;
-		}
+	*{
+		box-sizing:border-box;
+	}
+	body{
+		background-color: #b8c6db;
+		background-image: linear-gradient(315deg,#b8c6db 0%, #f5f7fa 74%);
+		font-family: "Poppins","sans-serif";
+		margin:0;
+		min-height: 100vh;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.quiz-container{
+		background-color: #fff;
+		width: 600px;
+		max-width: 100%;
+		overflow: hidden;
+		border-radius: 10px;
+		box-shadow: 0 0 10px 5px rgba(100,100,100,0.1);
+	}
+	.quiz-header{
+		padding: 2rem;
+	}
+	h2{
+		margin: 0;
+	}
 
-		ul{
-			list-style-type: none;
-			padding: 0;
 
-		}
+	ul{
+		list-style-type: none;
+		padding: 0;
 
-	</style>
+	}
+
+
+	ul li{
+		font-size: 1.1rem;
+		margin: 1rem 0;
+	}
+
+	ul li label{
+		cursor: pointer;
+	}
+
+	button{
+		background-color: #8e44ad;
+		border: none;
+		color: white;
+		cursor: pointer;
+		display: block;
+		font-family: inherit;
+		font-size: 1.1rem;
+		padding: 1.3rem;
+		width: 100%;
+	}
+
+	button:hover{background-color: #732d91;}
+	
+
+</style>
+
+</head>
+<body>
+	
+	<div class="quiz-container">
+		<div class="quiz-header">
+			<h2 id="question">Question text</h2>
+			<ul>
+				<li>
+					<input class="answer" type="radio" id="a" name="answer">
+					<label id="a_text" for="a">Question</label>
+				</li>
+				<li>
+					<input class="answer" type="radio" id="b" name="answer">
+					<label id="b_text" for="b">Question</label>
+				</li>
+				<li>
+					<input class="answer" type="radio" id="c" name="answer">
+					<label id="c_text" for="c">Question</label>
+				</li>
+				<li>
+					<input class="answer" type="radio" id="d" name="answer">
+					<label id="d_text" for="d">Question</label>
+				</li>
+			</ul>
+		</div>
+		
+		<button id="submit">Submit</button>
+	</div>
+
 	<script>
 		const quizData=[
 		{
@@ -54,67 +102,95 @@
 			b: '17',
 			c: '26',
 			d: '110',
-			correct:
-		},{
+			correct:'c'
+		}, {
 			question:'What is the most used programming language in 2019?',
 			a:'Java',
 			b:'C',
 			c:'Python',
 			d:'JavaScript',
-			correct:'a',
-		},{
+			correct:'a'
+		}, {
 			question:'Who is the President of US',
 			a:'Florin Pop',
 			b:'Donald Trumb',
 			c:'Ivan Saldano',
 			d:'Mihai Andrei',
-			correct:'d',
-		},{
+			correct:'d'
+		}, {
 			question:'What does HTML stand for',
 			a:'Hypertext Markup language',
 			b:'Cascading Style Sheet',
 			c:'Jason Object Notation',
 			d:'Application programming Interface',
-			correct:'a',
-		},{
+			correct:'a'
+		}, {
 			question:'What year was JS launched',
 			a:'1996',
 			b:'1995',
 			c:'1994',
 			d:'none of the above',
-			correct:'d',
+			correct:'d'
 		}
-		]
-	</script>
-</head>
-<body>
-<p>51.25
-	https://www.youtube.com/watch?v=dtKciwk_si4&ab_channel=FlorinPop</p>
-	<div class="quiz-container">
-		<div class="quiz-header">
-			<h2>Question text</h2>
-			<ul>
-				<li>
-					<input type="radio" id="a" name="answer">
-					<label for="a">Question</label>
-				</li>
-				<li>
-					<input type="radio" id="b" name="answer">
-					<label for="b">Question</label>
-				</li>
-				<li>
-					<input type="radio" id="c" name="answer">
-					<label for="c">Question</label>
-				</li>
-				<li>
-					<input type="radio" id="d" name="answer">
-					<label for="d">Question</label>
-				</li>
-			</ul>
-		</div>
-		
-		<button >Submit</button>
-	</div>
+		];
 
+		const questionEl=document.getElementById("question");
+		const a_text = document.getElementById("a_text");
+		const b_text = document.getElementById("b_text");
+		const c_text = document.getElementById("c_text");
+		const d_text = document.getElementById("d_text");
+
+		const submitBtn=document.getElementById("submit");
+
+
+		let currentQuiz = 0;
+		let score=0;
+		loadQuiz();
+
+		function loadQuiz(){
+			currentQuizData = quizData[currentQuiz];
+
+			questionEl.innerText=currentQuizData.question;
+			a_text.innerText = currentQuizData.a;
+			b_text.innerText = currentQuizData.b;
+			c_text.innerText = currentQuizData.d;
+			d_text.innerText = currentQuizData.c;
+
+
+		}
+
+		function getSelected(){
+			const answerEls = document.querySelectorAll("answer");
+
+			let answer = undefined;
+
+			answerEls.forEach((answerEl)=>{
+				if (answerEl.checked) {
+					answer=answerEl.id;
+				}
+			});
+
+			return answer;
+
+		}
+
+
+		submitBtn.addEventListener('click', () => {
+
+			const answer = getSelected();
+			console.log(answer);
+
+			if (answer) {
+				currentQuiz++;
+				if (currentQuiz < quizData.length) {
+					loadQuiz();
+				}else{
+					alert("Finished");
+				}
+			}
+
+		});
+
+	</script>
 </body>
 </html>
