@@ -68,7 +68,7 @@
 </head>
 <body>
 	
-	<div class="quiz-container">
+	<div class="quiz-container" id="quiz">
 		<div class="quiz-header">
 			<h2 id="question">Question text</h2>
 			<ul>
@@ -98,42 +98,44 @@
 		const quizData=[
 		{
 			question:'How old is Florin',
-			a: '10',
-			b: '17',
-			c: '26',
-			d: '110',
+			a: 'a - 10',
+			b: 'b - 17',
+			c: 'c - 26',
+			d: 'd - 110',
 			correct:'c'
 		}, {
 			question:'What is the most used programming language in 2019?',
-			a:'Java',
-			b:'C',
-			c:'Python',
-			d:'JavaScript',
+			a:'a - Java',
+			b:'b - C',
+			c:'c - Python',
+			d:'d - JavaScript',
 			correct:'a'
 		}, {
 			question:'Who is the President of US',
-			a:'Florin Pop',
-			b:'Donald Trumb',
-			c:'Ivan Saldano',
-			d:'Mihai Andrei',
+			a:'a - Florin Pop',
+			b:'b - Donald Trumb',
+			c:'c - Ivan Saldano',
+			d:'d - Mihai Andrei',
 			correct:'d'
 		}, {
 			question:'What does HTML stand for',
-			a:'Hypertext Markup language',
-			b:'Cascading Style Sheet',
-			c:'Jason Object Notation',
-			d:'Application programming Interface',
+			a:'a - Hypertext Markup language',
+			b:'b - Cascading Style Sheet',
+			c:'c - Jason Object Notation',
+			d:'d - Application programming Interface',
 			correct:'a'
 		}, {
 			question:'What year was JS launched',
-			a:'1996',
-			b:'1995',
-			c:'1994',
-			d:'none of the above',
+			a:'a - 1996',
+			b:'b - 1995',
+			c:'c - 1994',
+			d:'d - none of the above',
 			correct:'d'
 		}
 		];
 
+		const quiz = document.getElementById("quiz");
+		const answerEls = document.querySelectorAll(".answer");
 		const questionEl=document.getElementById("question");
 		const a_text = document.getElementById("a_text");
 		const b_text = document.getElementById("b_text");
@@ -148,25 +150,29 @@
 		loadQuiz();
 
 		function loadQuiz(){
-			currentQuizData = quizData[currentQuiz];
+
+			deselectAnswers();
+
+			const currentQuizData = quizData[currentQuiz];
 
 			questionEl.innerText=currentQuizData.question;
+			
 			a_text.innerText = currentQuizData.a;
 			b_text.innerText = currentQuizData.b;
-			c_text.innerText = currentQuizData.d;
-			d_text.innerText = currentQuizData.c;
+			c_text.innerText = currentQuizData.c;
+			d_text.innerText = currentQuizData.d;
 
 
 		}
 
 		function getSelected(){
-			const answerEls = document.querySelectorAll("answer");
 
 			let answer = undefined;
 
-			answerEls.forEach((answerEl)=>{
+			answerEls.forEach((answerEl) => {
 				if (answerEl.checked) {
 					answer=answerEl.id;
+					answer.style.backgroundColor = "orange";
 				}
 			});
 
@@ -174,21 +180,29 @@
 
 		}
 
+		function deselectAnswers(){
+			answerEls.forEach((answerEl) => {
+				answerEl.checked=false;
+			});
+		}
+
 
 		submitBtn.addEventListener('click', () => {
 
 			const answer = getSelected();
-			console.log(answer);
 
 			if (answer) {
+				if (answer === quizData[currentQuiz].correct) {
+					score++;
+				}
+
 				currentQuiz++;
 				if (currentQuiz < quizData.length) {
 					loadQuiz();
-				}else{
-					alert("Finished");
+				}else{				
+					quiz.innerHTML=`<h2 style="text-align:center; padding:5px;"> ${quizData.length} soru içerisinden ${score}/ soruya cevap verdin</h2>`;
 				}
 			}
-
 		});
 
 	</script>
