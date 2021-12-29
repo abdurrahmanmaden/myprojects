@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Recipes App</title>
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<style>
+	@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+	*{box-sizing: border-box;}
+
+	body{
+		font-family: "Poppins","sans-serif;";
+		margin: 0;
+		background-color: #ece9e6;
+		background: -webkit-linear-gradient(
+			to right,
+			#ffffff,
+			#ece9e6
+			);
+
+		background: -webkit-linear-gradient(
+			to right,
+			#ffffff,
+			#ece9e6
+			);
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		min-height: 100vh;
+
+	}
+
+	img{width: 100%;}
+
+	.mobile-container{
+		background-color: #fff;
+		box-shadow: 0 0 10px 2px #3333331a;
+		border-radius: 3px;
+		overflow: hidden;
+		width: 400px;
+	}
+	header{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+	}
+
+	header input{
+		background-color: #eee;
+		border: none;
+		border-radius: 3px;
+		padding: 0.5rem 1rem;
+		font-size: inherit;
+	}
+	header button{
+		background-color: transparent;
+		color: rgb(138,129,141);
+		font-size: 1.5rem;
+		margin-left: 10px;
+		border: none;
+	}
+
+	.fav-container{
+		background-color: rgb(243,255,255);
+		text-align: center;
+		padding: 0.25 1rem;
+	}
+
+	.fav-meals{
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		list-style-type: none;
+		padding: 0;
+	}
+
+	.fav-meals li{
+		margin: 5px;
+		width: 75px;
+	}
+
+	.fav-meals li img{
+		border: 2px solid #fff;
+		border-radius: 50%;
+		box-shadow: 0 0 10px 2px #3333331a;
+		object-fit: cover;
+		height: 70px;
+		width: 70px;
+	}
+
+	.fav-meals li span{
+		font-size: 0.9rem;
+	}
+
+	.meal{
+		margin: 1.5rem;
+		border-radius: 3px;
+		box-shadow: 0 0 10px 2px #3333331a;
+		overflow: hidden;
+
+	}
+	.meal-header{
+		position: relative;
+	}
+	.meal-header .random{
+		position: absolute;
+		top: 1rem;
+		background-color: #fff;
+		padding: 0.25rem 1rem;
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
+	}
+	.meal-header img{
+		height: 250px;
+		width: 100%;
+		object-fit: cover;
+	}
+	.meal-body{
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem;
+	}
+
+	.meal-body h4{
+		margin: 0;
+	}
+
+	.meal-body .fav-btn{
+		border: none;
+		background-color: transparent;
+		font-size: 1.2rem;
+		cursor: pointer;
+		color: rgb(197,188,188);
+	}
+
+
+	.meal-body .fav-btn.active{
+		color: rebeccapurple;
+	}
+
+</style>
+
+</head>
+<body>
+
+	<div class="mobile-container">
+		<header>
+			<input type="text">
+			<button id="search"><i class="fas fa-search"></i></button>
+		</header>
+		<div class="fav-container">
+			<h3>Favorite Meals</h3>
+			<ul class="fav-meals">
+				<li>
+					<img src="https://via.placeholder.com/350x350">
+					<span>Lasagna</span>
+				</li>
+				<li>
+					<img src="https://via.placeholder.com/350x350">  
+					<span>Lasagna</span>
+				</li>
+				<li>
+					<img src="https://via.placeholder.com/350x350">  
+					<span>Lasagna</span>
+				</li>
+
+				<li>
+					<img src="https://via.placeholder.com/350x350">  
+					<span>Lasagna</span>
+				</li>
+
+			</ul>
+		</div>
+		<div class="meals">
+			<div class="meal">
+				<div class="meal-header">
+					<span class="random">Random Recipe</span>
+					<img src="https://via.placeholder.com/350x350">
+				</div>
+				<div class="meal-body">
+					<h4>Veggie Veggies</h4>
+					<button class="fav-btn">
+						<i class="fas fa-heart"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<script>
+		2:03:30
+		getRandomMeal();
+
+		async function getRandomMeal(){
+			const resp = await fetch(
+				"https://www.themealdb.com/api/json/v1/1/random.php"
+				);
+
+			const randomMeal = await resp.json();
+
+			console.log(randomMeal);
+		}
+
+		function fetMealById(id){
+			const meal = fetch('www.themealdb.com/api/json/v1/1/lookup.php?i='+id);
+
+		}
+
+		function getMealBySearch(term){
+			const meals = fetch('www.themealdb.com/api/json/v1/1/search.php?f='+term);
+
+		}
+
+	</script>
+</body>
+</html>
