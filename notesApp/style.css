@@ -7,6 +7,7 @@
 		background-color: #7bdaf3;
 		display: flex;
 		flex-wrap: wrap;
+		padding-top: 3rem;
 	}
 
 	.add{
@@ -23,9 +24,10 @@
 
 	.note{
 		background-color: #fff;
+		box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
 		margin: 20px; 
 		width: 500px;
-		height: 500px;
+		height: 400px;
 	}
 
 	.note .tools{
@@ -45,7 +47,7 @@
 	}
 
 	.note .main{
-		background-color: #fff;
+		background-color: #eee;
 		overflow: hidden;
 		height: 400px;
 		width: 100%;
