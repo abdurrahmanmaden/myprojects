@@ -1,0 +1,102 @@
+5:09:37 / 9:17:08
+	https://www.youtube.com/watch?v=dtKciwk_si4&t=12004s
+
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Movies App</title>
+	</head>
+	<body>
+		<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+		*{box-sizing: border-box;}
+		body{
+			background-color: #22254b;
+			font-family: "Poppins","sans-serif;";
+			margin: 0;
+		}
+
+		.movie{
+			border-radius: 3px;
+			box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+			width: 300px;
+			margin: 2rem;
+			background-color: #373b69;
+		}
+
+		.movie img{
+			width: 100%;
+		}
+
+		.movie-info{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0.5rem 1rem 1rem;
+			color: #eee;
+			letter-spacing: 1px;
+		}
+
+		.movie-info h3{
+			margin: 0;
+		}
+
+		.movie-info span{
+			background-color: #22254b;
+			padding: 0.25rem 0.5rem;
+			border-radius: 3px;
+		}
+
+
+	</style>
+	<!-- https://github.com/mihaiandrei97/movie-list-app-react-hooks/blob/master/src/components/Discover.js -->
+
+	<main>
+		
+	</main>
+
+
+
+	<script>
+		const APIKEY='04c35731a5ee918f014970082a0088b1';
+		const APIURL='https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1';
+
+		const IMGPATH ='https://image.tmdb.org/t/p/w1280';
+
+		async function getMovies() {
+			
+
+			const resp = await fetch(APIURL);
+			const respData = await resp.json();
+
+			console.log(respData);
+
+			respData.results.forEach(movie=>{
+				const {poster_path, title, vote_average} = movie;
+
+				const movieEl=document.createElement('div');
+				movieEl.classList.add('movie');
+
+				movieEl.innerHTML=`
+
+				<img src="${IMGPATH + poster_path}" alt="${title}">
+				<div class="movie-info">
+				<h3>${title}</h3>
+				<span>${vote_average}</span>
+				</div>
+				`;
+
+				document.body.appendChild(movieEl);
+			});
+
+			return respData;
+		}
+
+		getMovies();
+
+	</script>
+	</body>
+	</html>
