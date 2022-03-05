@@ -1,16 +1,13 @@
-5:09:37 / 9:17:08
-	https://www.youtube.com/watch?v=dtKciwk_si4&t=12004s
-
-	<!DOCTYPE html>
-	<html>
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Movies App</title>
-	</head>
-	<body>
-		<style>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Movies App</title>
+</head>
+<body>
+	<style>
 		@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
 		*{box-sizing: border-box;}
 		body{
@@ -19,12 +16,43 @@
 			margin: 0;
 		}
 
+		header{
+			background-color: #373b69;
+			padding: 1rem;
+			display:flex;
+			justify-content: flex-end;
+		}
+
+		.search{
+			background-color: transparent;
+			border:2px solid #22254b;
+			border-radius: 50px;
+			padding: 0.5rem 1rem;
+			font-family: inherit;
+			font-size: 1rem;
+			color:#fff;
+		}
+
+		.search::placeholder{
+			color:#7378c5;
+		}
+		.search:focus{
+			background-color: #22254b;
+			outline: none;
+		}
+		main{
+			display: flex;
+			flex-wrap: wrap;
+		}
+
 		.movie{
 			border-radius: 3px;
 			box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
 			width: 300px;
-			margin: 2rem;
+			margin: 1rem;
 			background-color: #373b69;
+			overflow: hidden;
+			position: relative;
 		}
 
 		.movie img{
@@ -37,7 +65,7 @@
 			align-items: center;
 			padding: 0.5rem 1rem 1rem;
 			color: #eee;
-			letter-spacing: 1px;
+			letter-spacing: 0.5px;
 		}
 
 		.movie-info h3{
@@ -48,55 +76,123 @@
 			background-color: #22254b;
 			padding: 0.25rem 0.5rem;
 			border-radius: 3px;
+			font-weight: bold;
 		}
 
 
+		.movie-info span.green{
+			color: rgb(39,189, 39);
+		}
+
+		.movie-info span.orange{
+			color: orange;
+
+		}
+		.movie-info span.red{
+			color:rgb(189, 42, 42);
+		}
+
+		.overview{
+			background-color: rgba(255,255,255, 0.9);
+			padding: 2rem;
+			position: absolute;
+			max-height: 100%;
+			overflow: auto;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			transform: translateY(100%);
+			transition: transform 0.4s ease-in;
+		}
+		.movie:hover .overview{
+			transform: translateY(0);
+		}
+
 	</style>
 	<!-- https://github.com/mihaiandrei97/movie-list-app-react-hooks/blob/master/src/components/Discover.js -->
-
-	<main>
-		
-	</main>
-
-
+	<header>
+		<form id="form">
+			<input type="text" name="search" id="search" class="search" placeholder="Search">
+		</form>
+	</header>
+	<main id="main"></main>
 
 	<script>
 		const APIKEY='04c35731a5ee918f014970082a0088b1';
 		const APIURL='https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=04c35731a5ee918f014970082a0088b1&page=1';
+		const SEARCHAPI = 'https://api.themoviedb.org/3/search/movie?&api_key=04c35731a5ee918f014970082a0088b1&query=';
 
 		const IMGPATH ='https://image.tmdb.org/t/p/w1280';
 
-		async function getMovies() {
+		const main = document.getElementById('main');
+		const form = document.getElementById('form');
+		const search = document.getElementById('search');
+
+		//initially get fav movies
+		getMovies(APIURL);
+
+		async function getMovies(url) {
 			
 
-			const resp = await fetch(APIURL);
+			const resp = await fetch(url);
 			const respData = await resp.json();
 
 			console.log(respData);
 
-			respData.results.forEach(movie=>{
-				const {poster_path, title, vote_average} = movie;
+			showMovies(respData.results);
+
+			return respData;
+		}
+
+		function showMovies(movies){
+			//clear main
+			main.innerHTML ='';
+
+			movies.forEach(movie=>{
+				const {poster_path, title, vote_average, overview} = movie;
 
 				const movieEl=document.createElement('div');
 				movieEl.classList.add('movie');
 
 				movieEl.innerHTML=`
-
 				<img src="${IMGPATH + poster_path}" alt="${title}">
 				<div class="movie-info">
 				<h3>${title}</h3>
-				<span>${vote_average}</span>
+				<span class="${getClassByRate(vote_average)}">${vote_average}</span>
+				</div>
+				<div class="overview">
+				${overview}
 				</div>
 				`;
 
-				document.body.appendChild(movieEl);
+				main.appendChild(movieEl);
 			});
-
-			return respData;
 		}
 
-		getMovies();
+		function getClassByRate(vote){
+			if (vote>=8) {
+				return 'green';
+			}else if (vote >= 5){
+				return 'orange'
+			}else{
+				return 'red';
+			}
+		}
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+
+			const searchTerm = search.value;
+
+			if (searchTerm) {
+				getMovies(SEARCHAPI +searchTerm);
+
+				search.value='';
+			}
+		});
+
+
 
 	</script>
-	</body>
-	</html>
+</body>
+</html>
